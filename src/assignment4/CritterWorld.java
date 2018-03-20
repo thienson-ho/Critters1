@@ -2,7 +2,7 @@ package assignment4;
 
 import java.util.ArrayList;
 
-public class CritterWorld {
+public class CritterWorld extends Critter{
     private int width;
     private int height;
     private ArrayList<Critter> world;
