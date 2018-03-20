@@ -70,10 +70,45 @@ public class Main {
         /* Do not alter the code above for your submission. */
         /* Write your code below. */
         
-         System.out.println("GLHF");
+        boolean errorFlag = false;
+        boolean quitFlag = true; 
+        while(quitFlag) {
+        	System.out.print("critters> ");
+        	String input = kb.nextLine();
         
+        	if(input.indexOf("q") != -1) {
+        		if(processQuit(input)) {
+        			quitFlag = false;
+        		}
+        	}else if(input.charAt(0) == 's') {
+        		String newInput = input.replaceAll(" ","");
+            	newInput = newInput.replaceAll("	", "");
+        		if(newInput.indexOf("show") == 0 && input.indexOf("show") != -1 && processShow(newInput)) {
+        			Critter.displayWorld();
+        		}
+        	}
+        	
+        	
+        }
+        System.out.println("remove this done");
         /* Write your code above */
         System.out.flush();
 
     }
+    
+    public static boolean processQuit(String input) {
+    	String newInput = input.replaceAll(" ","");
+    	newInput = newInput.replaceAll("	", "");
+    	if(newInput.equals("quit") && input.indexOf("quit") != -1) {
+    		return true;
+    	}
+    	return false;
+    }
+    public static boolean processShow(String input) {
+    	if(input.equals("show")) {
+    		return true;
+    	}
+    	return false;
+    }
+    
 }
