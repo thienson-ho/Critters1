@@ -2,17 +2,18 @@ package assignment4;
 /* CRITTERS Critter.java
  * EE422C Project 4 submission by
  * Replace <...> with your actual data.
- * <Student1 Name>
- * <Student1 EID>
- * <Student1 5-digit Unique No.>
- * <Student2 Name>
- * <Student2 EID>
- * <Student2 5-digit Unique No.>
+ * <ThienSon Ho>
+ * <tsh848>
+ * <15505>
+ * <Arjun Singh>
+ * <AS78363>
+ * <15505>
  * Slip days used: <0>
- * Fall 2016
+ * Spring 2018
  */
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 /* see the PDF for descriptions of the methods and fields in this class
@@ -51,10 +52,49 @@ public abstract class Critter {
 	private int y_coord;
 	
 	protected final void walk(int direction) {
+		switch (direction) {
+			case 0:
+				x_coord++;
+				break;
+
+			case 1:
+				x_coord++;
+				y_coord--;
+				break;
+
+			case 2:
+				y_coord--;
+				break;
+
+			case 3:
+				x_coord--;
+				y_coord--;
+				break;
+
+			case 4:
+				x_coord--;
+				break;
+
+			case 5:
+				x_coord--;
+				y_coord++;
+				break;
+
+			case 6:
+				y_coord++;
+				break;
+
+			case 7:
+				x_coord++;
+				y_coord++;
+				break;
+		}
+
 	}
 	
 	protected final void run(int direction) {
-		
+		walk(direction);
+		walk(direction);
 	}
 	
 	protected final void reproduce(Critter offspring, int direction) {
@@ -74,6 +114,18 @@ public abstract class Critter {
 	 * @throws InvalidCritterException
 	 */
 	public static void makeCritter(String critter_class_name) throws InvalidCritterException {
+		try {
+			Class critterType = Class.forName("assignment4." + critter_class_name);
+			Critter critter = (Critter) critterType.newInstance();
+			population.add(critter);
+		} catch (ClassNotFoundException e) {
+			throw new InvalidCritterException(critter_class_name);
+		} catch (InstantiationException e) {
+			throw new InvalidCritterException(critter_class_name);
+		} catch (IllegalAccessException e) {
+			throw new InvalidCritterException(critter_class_name);
+		}
+
 	}
 	
 	/**
@@ -84,6 +136,16 @@ public abstract class Critter {
 	 */
 	public static List<Critter> getInstances(String critter_class_name) throws InvalidCritterException {
 		List<Critter> result = new java.util.ArrayList<Critter>();
+		try {
+			Class critterType = Class.forName("assignment4." + critter_class_name);
+			for (Critter c: population) {
+				if(critterType.isInstance(c)) {
+					result.add(c);
+				}
+			}
+		} catch (ClassNotFoundException e) {
+			throw new InvalidCritterException(critter_class_name);
+		}
 	
 		return result;
 	}
@@ -168,15 +230,55 @@ public abstract class Critter {
 	 * Clear the world of all critters, dead and alive
 	 */
 	public static void clearWorld() {
+		population.clear();
+		babies.clear();
 		// Complete this method.
 	}
-	
+
+	//TODO complete worldTimeStep
 	public static void worldTimeStep() {
 		// Complete this method.
 	}
-	
+
+	//TODO make the Critters represented by different symbols
 	public static void displayWorld() {
 
-		// Complete this method.
+		//create the top and bottom border and empty world row
+		String border = "+";
+		String row = "|";
+		for(int i = 0; i < Params.world_width; i++) {
+			border += "-";
+			row += " ";
+		}
+		border += "+";
+		row += "|";
+
+		//Add empty rows to world
+		ArrayList<String> world = new ArrayList<>();
+		for(int i = 0; i < Params.world_height; i++) {
+			world.add(row);
+		}
+
+		//Top border
+		System.out.println(border);
+
+		//Put the critters in the correct positions
+		for(Critter c: population) {
+			int x = c.x_coord;
+			int y = c.y_coord;
+
+			String currentRow = world.get(y);
+			String newRow = currentRow.substring(0,x) + "@" + currentRow.substring(x+1);
+		}
+
+		//Print each row of the world
+		for(String s: world) {
+			System.out.println(s);
+		}
+
+		//Bottom border
+		System.out.println(border);
+
+
 	}
 }
