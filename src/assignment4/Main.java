@@ -75,16 +75,30 @@ public class Main {
         while(quitFlag) {
         	System.out.print("critters> ");
         	String input = kb.nextLine();
-        
+        	
+        	//remove this
+        	fakeMake();
+        	
         	if(input.indexOf("q") != -1) {
         		if(processQuit(input)) {
         			quitFlag = false;
         		}
-        	}else if(input.charAt(0) == 's') {
+        	}else if(input.indexOf("s") != -1) {
         		String newInput = input.replaceAll(" ","");
             	newInput = newInput.replaceAll("	", "");
         		if(newInput.indexOf("show") == 0 && input.indexOf("show") != -1 && processShow(newInput)) {
         			Critter.displayWorld();
+        		}
+        		
+        		if(newInput.indexOf("show") == 0 && input.indexOf("show") != -1) {
+        			
+        		}
+        	}else if(input.indexOf("m") != -1) {
+        		String newInput = input.replaceAll(" ","");
+            	newInput = newInput.replaceAll("	", "");
+        		if(newInput.indexOf("make") == 0 && input.indexOf("make") != -1) {
+        			newInput = input.replace("make","");
+        			processMake(newInput);
         		}
         	}
         	
@@ -104,11 +118,43 @@ public class Main {
     	}
     	return false;
     }
+    
     public static boolean processShow(String input) {
     	if(input.equals("show")) {
     		return true;
     	}
     	return false;
+    }
+    
+    public static void processStep(String input) {
+    	
+    }
+    
+    public static void processMake(String input) {
+    	String[] twoInputs = input.split(" ");
+    	if(twoInputs.length == 2) {
+    		try{
+    			int loop = Integer.parseInt(twoInputs[1],10);
+    			for(int i = 0; i < loop; i++) {
+    				Critter.makeCritter(twoInputs[0]);
+    			}
+    		}catch(Exception e) {
+    			//handle exception
+    		}
+    	}
+    }
+    
+    public static void fakeMake() {
+    	try {
+    		for(int i = 0; i < 100; i++) {
+    			Critter.makeCritter("Algae");
+    		}
+    		for(int i = 0; i < 25; i++) {
+    			Critter.makeCritter("Craig");
+    		}
+    	}catch(Exception e){
+    		
+    	}
     }
     
 }
