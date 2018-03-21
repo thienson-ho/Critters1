@@ -14,7 +14,9 @@ package assignment4;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.List;
 import java.io.*;
+import java.lang.reflect.Method;
 
 
 /*
@@ -112,7 +114,9 @@ public class Main {
     				newInput = newInput.replaceAll("	", "");
     				int seed = Integer.parseInt(newInput,10);
     				Critter.setSeed(seed);
-        				
+        		
+        		}else if(newInput.indexOf("stats") == 0 && input.indexOf("stats") != -1 && processStats(input.replace("stats", ""))) {
+        			
         		}else{
         			System.out.println("invalid command: " + input);
         		}
@@ -204,6 +208,34 @@ public class Main {
     				return false;
     			}
     			return true;
+    		}catch(Exception e) {
+    			return false;
+    		}
+    	}
+    	return false;
+    }
+    
+    public static boolean processStats(String input) {
+    	String[] twoInputs = input.split(" ");
+    	int length = 0;
+    	ArrayList<String> goodElements = new ArrayList<String>();
+    	for(String x : twoInputs) {
+    		x = x.replaceAll("	", "");
+    		if(!(x.equals(""))) {
+    			length++;
+    			goodElements.add(x);
+    		}
+    	}
+    	if(length == 1) {
+    		try{
+    			/*
+    			List<Critter> critterList = Critter.getInstances(goodElements.get(0));
+    			Class critterType = Class.forName(myPackage + "." + goodElements.get(0));
+    			Critter.runStats(critterList);
+    			Method m = critterType.getMethod("runStats", critterList.getClass());
+    			critterType.m(critterList);
+    			return true;
+    			*/
     		}catch(Exception e) {
     			return false;
     		}
