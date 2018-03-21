@@ -129,8 +129,9 @@ public class Main {
         		else {
         			System.out.println("invalid command: " + input);
         		}
+        	}else {
+        		System.out.println("invalid command: " + input);
         	}
-        	
         	
         }
         System.out.println("remove this done");
