@@ -102,7 +102,7 @@ public abstract class Critter {
 		    int holdY = y_coord;
 		    int[] newCoord = move(direction);
             x_coord = newCoord[0];
-            y_coord = newCoord[1S];
+            y_coord = newCoord[1];
             newCoord = move(direction);
             if(!isOccupied(newCoord[0],newCoord[1])) {
                 x_coord = newCoord[0];
