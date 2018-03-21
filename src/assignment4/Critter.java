@@ -183,7 +183,7 @@ public abstract class Critter {
 		int[] offspringCoords = move(direction);
 		offspring.x_coord = offspringCoords[0];
 		offspring.y_coord = offspringCoords[1];
-		population.add(offspring);
+		babies.add(offspring);
 	}
 
 	public abstract void doTimeStep();
@@ -204,10 +204,8 @@ public abstract class Critter {
 			Class critterType = Class.forName(myPackage + "." + critter_class_name); //"assignment4."
 			Critter critter = (Critter) critterType.newInstance();
 			critter.energy = Params.start_energy;
-//			critter.x_coord = getRandomInt(Params.world_width);
-//			critter.y_coord = getRandomInt(Params.world_height);
-			critter.x_coord = 2;
-			critter.y_coord = 2;
+			critter.x_coord = getRandomInt(Params.world_width);
+			critter.y_coord = getRandomInt(Params.world_height);
 			population.add(critter);
 
 		} catch (ClassNotFoundException e) {
@@ -352,6 +350,9 @@ public abstract class Critter {
 	        c.doTimeStep();
 	        c.energy -= Params.rest_energy_cost;
         }
+
+        population.addAll(babies);
+	    babies.clear();
 
         ArrayList<ArrayList<Critter>> encounters = new ArrayList<>();
 
