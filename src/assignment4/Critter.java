@@ -47,6 +47,9 @@ public abstract class Critter {
 	
 	private int energy = 0;
 	protected int getEnergy() { return energy; }
+
+	private boolean hasMoved = false;
+	private boolean hasFought = false;
 	
 	private int x_coord;
 	private int y_coord;
@@ -106,7 +109,7 @@ public abstract class Critter {
 	}
 
 	public abstract void doTimeStep();
-	public abstract boolean fight(String oponent);
+	public abstract boolean fight(String opponent);
 	
 	/**
 	 * create and initialize a Critter subclass.
@@ -122,6 +125,9 @@ public abstract class Critter {
 		try {
 			Class critterType = Class.forName("assignment4." + critter_class_name);
 			Critter critter = (Critter) critterType.newInstance();
+			critter.energy = Params.start_energy;
+			critter.x_coord = getRandomInt(Params.world_width);
+			critter.y_coord = getRandomInt(Params.world_height)
 			population.add(critter);
 		} catch (ClassNotFoundException e) {
 			throw new InvalidCritterException(critter_class_name);

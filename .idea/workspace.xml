@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5faca142-62d3-47f8-86a0-e0c5487349bb" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/src/assignment4/Critter1.java" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/out/production/Critters1/assignment4/Critter$TestCritter.class" afterPath="$PROJECT_DIR$/out/production/Critters1/assignment4/Critter$TestCritter.class" />
       <change beforePath="$PROJECT_DIR$/out/production/Critters1/assignment4/Critter.class" afterPath="$PROJECT_DIR$/out/production/Critters1/assignment4/Critter.class" />
@@ -21,28 +22,31 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/assignment4/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1470">
-              <caret line="92" column="47" lean-forward="true" selection-start-line="92" selection-start-column="47" selection-end-line="92" selection-end-column="47" />
+            <state relative-caret-position="1449">
+              <caret line="106" column="47" lean-forward="true" selection-start-line="106" selection-start-column="47" selection-end-line="106" selection-end-column="47" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Params.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/assignment4/Params.java">
+      <file leaf-file-name="Critter1.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/assignment4/Critter1.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="12" column="21" lean-forward="false" selection-start-line="12" selection-start-column="21" selection-end-line="12" selection-end-column="21" />
-              <folding />
+            <state relative-caret-position="105">
+              <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+              <folding>
+                <element signature="e#279#280#0" expanded="true" />
+                <element signature="e#305#306#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="InvalidCritterException.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/assignment4/InvalidCritterException.java">
+      <file leaf-file-name="MyCritter7.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/assignment4/MyCritter7.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="20" lean-forward="false" selection-start-line="0" selection-start-column="20" selection-end-line="0" selection-end-column="20" />
+            <state relative-caret-position="84">
+              <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -51,8 +55,8 @@
       <file leaf-file-name="Critter.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/assignment4/Critter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="61" column="41" lean-forward="false" selection-start-line="61" selection-start-column="41" selection-end-line="61" selection-end-column="41" />
+            <state relative-caret-position="143">
+              <caret line="124" column="13" lean-forward="true" selection-start-line="124" selection-start-column="13" selection-end-line="124" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -70,21 +74,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="expected_output.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test_sample/error_processing/expected_output.txt">
+      <file leaf-file-name="MyCritter1.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/assignment4/MyCritter1.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="84">
+              <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="input.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test_sample/error_processing/input.txt">
+      <file leaf-file-name="MyCritter6.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/assignment4/MyCritter6.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="84">
+              <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -102,11 +106,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MyCritter1.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/assignment4/MyCritter1.java">
+      <file leaf-file-name="Craig.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/assignment4/Craig.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="84">
-              <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+            <state relative-caret-position="294">
+              <caret line="20" column="38" lean-forward="true" selection-start-line="20" selection-start-column="38" selection-end-line="20" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -115,8 +119,8 @@
       <file leaf-file-name="Algae.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/assignment4/Algae.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
-              <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+            <state relative-caret-position="105">
+              <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -135,6 +139,8 @@
     <findStrings>
       <find>make</find>
       <find>inst</find>
+      <find>mak</find>
+      <find>opon</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -151,6 +157,7 @@
         <option value="$PROJECT_DIR$/src/assignment4/Main.java" />
         <option value="$PROJECT_DIR$/src/assignment4/Algae.java" />
         <option value="$PROJECT_DIR$/src/assignment4/CritterWorld.java" />
+        <option value="$PROJECT_DIR$/src/assignment4/Critter1.java" />
         <option value="$PROJECT_DIR$/src/assignment4/Critter.java" />
       </list>
     </option>
@@ -160,6 +167,9 @@
     <option name="y" value="75" />
     <option name="width" value="1400" />
     <option name="height" value="822" />
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -246,7 +256,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.A4SampleTest2">
+  <component name="RunManager" selected="Application.Main">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="HTML_USED" value="false" />
       <option name="WIDTH" value="400" />
@@ -404,9 +414,9 @@
     </list>
     <recent_temporary>
       <list size="3">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.A4SampleTest2" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.A4SampleTest" />
-        <item index="2" class="java.lang.String" itemvalue="Application.Main" />
+        <item index="0" class="java.lang.String" itemvalue="Application.Main" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.A4SampleTest2" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.A4SampleTest" />
       </list>
     </recent_temporary>
   </component>
@@ -431,6 +441,9 @@
       <configuration name="A4SampleTest" configurationId="JUnit" />
     </history-entry>
     <history-entry file="A4SampleTest2 - 2018.03.20 at 18h 24m 39s.xml">
+      <configuration name="A4SampleTest2" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="A4SampleTest2 - 2018.03.20 at 19h 26m 55s.xml">
       <configuration name="A4SampleTest2" configurationId="JUnit" />
     </history-entry>
   </component>
@@ -471,7 +484,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -518,42 +531,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/assignment4/MyCritter7.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/assignment4/Header.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/assignment4/MyCritter6.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/assignment4/Craig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="65" column="19" lean-forward="false" selection-start-line="65" selection-start-column="19" selection-end-line="65" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/assignment4/MyCritter1.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -616,26 +597,69 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/assignment4/Algae.java">
+    <entry file="file://$PROJECT_DIR$/src/assignment4/Craig.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        <state relative-caret-position="294">
+          <caret line="20" column="38" lean-forward="true" selection-start-line="20" selection-start-column="38" selection-end-line="20" selection-end-column="38" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/assignment4/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1470">
-          <caret line="92" column="47" lean-forward="true" selection-start-line="92" selection-start-column="47" selection-end-line="92" selection-end-column="47" />
+        <state relative-caret-position="1449">
+          <caret line="106" column="47" lean-forward="true" selection-start-line="106" selection-start-column="47" selection-end-line="106" selection-end-column="47" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assignment4/MyCritter6.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assignment4/Algae.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assignment4/MyCritter1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assignment4/MyCritter7.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="84">
+          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assignment4/Critter1.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding>
+            <element signature="e#279#280#0" expanded="true" />
+            <element signature="e#305#306#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/assignment4/Critter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="61" column="41" lean-forward="false" selection-start-line="61" selection-start-column="41" selection-end-line="61" selection-end-column="41" />
+        <state relative-caret-position="143">
+          <caret line="124" column="13" lean-forward="true" selection-start-line="124" selection-start-column="13" selection-end-line="124" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
