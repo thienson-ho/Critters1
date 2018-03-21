@@ -84,16 +84,37 @@ public class Main {
         		if(processQuit(input)) {
         			quitFlag = false;
         		}
+        		System.out.println("invalid command: " + input);
         	}else if(input.indexOf("s") != -1) {
         		String newInput = input.replaceAll(" ","");
             	newInput = newInput.replaceAll("	", "");
         		if(newInput.indexOf("show") == 0 && input.indexOf("show") != -1 && processShow(newInput)) {
         			Critter.displayWorld();
+        		
+        		}else if(newInput.indexOf("step") == 0 && input.indexOf("step") != -1 && processStep(input.replace("step", ""))) {
+        			if(newInput.equals("step")) {
+        				Critter.worldTimeStep();
+        			}else {
+        				newInput = input.replace("step", "");
+        				newInput = newInput.replaceAll(" ", "");
+        				newInput = newInput.replaceAll("	", "");
+        				int loop = Integer.parseInt(newInput,10);
+        				for(int i = 0; i < loop; i++) {
+        					Critter.worldTimeStep();
+        				}
+        			}
+        		
+        		}else if(newInput.indexOf("seed") == 0 && input.indexOf("seed") != -1 && processSeed(input.replace("seed", ""))) {
+        			newInput = input.replace("seed", "");
+    				newInput = newInput.replaceAll(" ", "");
+    				newInput = newInput.replaceAll("	", "");
+    				int seed = Integer.parseInt(newInput,10);
+    				Critter.setSeed(seed);
+        				
+        		}else{
+        			System.out.println("invalid command: " + input);
         		}
         		
-        		if(newInput.indexOf("show") == 0 && input.indexOf("show") != -1) {
-        			
-        		}
         	}else if(input.indexOf("m") != -1) {
         		String newInput = input.replaceAll(" ","");
             	newInput = newInput.replaceAll("	", "");
@@ -102,6 +123,9 @@ public class Main {
         			if(!processMake(newInput)) {
         				System.out.println("error processing: " + input);
         			}
+        		}
+        		else {
+        			System.out.println("invalid command: " + input);
         		}
         	}
         	
@@ -129,8 +153,59 @@ public class Main {
     	return false;
     }
     
-    public static void processStep(String input) {
-    	
+    public static boolean processStep(String input) {
+    	String ni = input.replaceAll(" ", "");
+    	ni = ni.replaceAll("	", "");
+    	if(ni.equals("")) {
+    		return true;
+    	}
+    	String[] twoInputs = input.split(" ");
+    	int length = 0;
+    	ArrayList<String> goodElements = new ArrayList<String>();
+    	for(String x : twoInputs) {
+    		x = x.replaceAll("	", "");
+    		if(!(x.equals(""))) {
+    			length++;
+    			goodElements.add(x);
+    		}
+    	}
+    	if(length == 1) {
+    		try{
+    			int loop = Integer.parseInt(goodElements.get(0),10);
+    			if(loop <= 0) {
+    				return false;
+    			}
+    			return true;
+    		}catch(Exception e) {
+    			return false;
+    		}
+    	}
+    	return false;
+    }
+    
+    public static boolean processSeed(String input) {
+    	String[] twoInputs = input.split(" ");
+    	int length = 0;
+    	ArrayList<String> goodElements = new ArrayList<String>();
+    	for(String x : twoInputs) {
+    		x = x.replaceAll("	", "");
+    		if(!(x.equals(""))) {
+    			length++;
+    			goodElements.add(x);
+    		}
+    	}
+    	if(length == 1) {
+    		try{
+    			int loop = Integer.parseInt(goodElements.get(0),10);
+    			if(loop < 0) {
+    				return false;
+    			}
+    			return true;
+    		}catch(Exception e) {
+    			return false;
+    		}
+    	}
+    	return false;
     }
     
     public static boolean processMake(String input) {
@@ -138,6 +213,7 @@ public class Main {
     	int length = 0;
     	ArrayList<String> goodElements = new ArrayList<String>();
     	for(String x : twoInputs) {
+    		x = x.replaceAll("	", "");
     		if(!(x.equals(""))) {
     			length++;
     			goodElements.add(x);
@@ -146,6 +222,9 @@ public class Main {
     	if(length == 2) {
     		try{
     			int loop = Integer.parseInt(goodElements.get(1),10);
+    			if(loop <= 0) {
+    				return false;
+    			}
     			for(int i = 0; i < loop; i++) {
     				Critter.makeCritter(goodElements.get(0));
     			}
