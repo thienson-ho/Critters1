@@ -12,6 +12,7 @@ package assignment4;
  * Fall 2016
  */
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
 
@@ -98,7 +99,9 @@ public class Main {
             	newInput = newInput.replaceAll("	", "");
         		if(newInput.indexOf("make") == 0 && input.indexOf("make") != -1) {
         			newInput = input.replace("make","");
-        			processMake(newInput);
+        			if(!processMake(newInput)) {
+        				System.out.println("error processing: " + input);
+        			}
         		}
         	}
         	
@@ -130,18 +133,28 @@ public class Main {
     	
     }
     
-    public static void processMake(String input) {
+    public static boolean processMake(String input) {
     	String[] twoInputs = input.split(" ");
-    	if(twoInputs.length == 2) {
-    		try{
-    			int loop = Integer.parseInt(twoInputs[1],10);
-    			for(int i = 0; i < loop; i++) {
-    				Critter.makeCritter(twoInputs[0]);
-    			}
-    		}catch(Exception e) {
-    			//handle exception
+    	int length = 0;
+    	ArrayList<String> goodElements = new ArrayList<String>();
+    	for(String x : twoInputs) {
+    		if(!(x.equals(""))) {
+    			length++;
+    			goodElements.add(x);
     		}
     	}
+    	if(length == 2) {
+    		try{
+    			int loop = Integer.parseInt(goodElements.get(1),10);
+    			for(int i = 0; i < loop; i++) {
+    				Critter.makeCritter(goodElements.get(0));
+    			}
+    			return true;
+    		}catch(Exception e) {
+    			return false;
+    		}
+    	}
+    	return false;
     }
     
     public static void fakeMake() {
@@ -153,7 +166,7 @@ public class Main {
     			Critter.makeCritter("Craig");
     		}
     	}catch(Exception e){
-    		
+    		System.out.println("fakeMe() didn't work");
     	}
     }
     
