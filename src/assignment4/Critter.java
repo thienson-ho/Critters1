@@ -64,9 +64,11 @@ public abstract class Critter {
         }
         //timeStep walk
         else if(!hasMoved && !hasFought) {
+        	world[y_coord][x_coord].remove(this);
             int[] newCoord = move(direction);
             x_coord = newCoord[0];
             y_coord = newCoord[1];
+            world[y_coord][x_coord].add(this);
             hasMoved =  true;
         }
 
@@ -74,8 +76,10 @@ public abstract class Critter {
         else if(!hasMoved && hasFought) {
             int[] newCoord = move(direction);
             if(!isOccupied(newCoord[0],newCoord[1])) {
+				world[y_coord][x_coord].remove(this);
                 x_coord = newCoord[0];
                 y_coord = newCoord[1];
+				world[y_coord][x_coord].add(this);
                 hasMoved =  true;
             }
         }
@@ -88,12 +92,14 @@ public abstract class Critter {
 		    return;
         }
         else if(!hasMoved && !hasFought) {
+			world[y_coord][x_coord].remove(this);
 		    int[] newCoord = move(direction);
             x_coord = newCoord[0];
             y_coord = newCoord[1];
             newCoord = move(direction);
             x_coord = newCoord[0];
             y_coord = newCoord[1];
+			world[y_coord][x_coord].add(this);
             hasMoved = true;
         }
 
@@ -105,8 +111,10 @@ public abstract class Critter {
             y_coord = newCoord[1];
             newCoord = move(direction);
             if(!isOccupied(newCoord[0],newCoord[1])) {
+            	world[holdY][holdX].remove(this);
                 x_coord = newCoord[0];
                 y_coord = newCoord[1];
+                world[y_coord][x_coord].add(this);
                 hasMoved =  true;
             }else{
                 x_coord = holdX;
@@ -217,12 +225,13 @@ public abstract class Critter {
 	 */
 	public static void makeCritter(String critter_class_name) throws InvalidCritterException {
 		try {
-			Class critterType = Class.forName(myPackage + critter_class_name);
+			Class critterType = Class.forName(myPackage + "." + critter_class_name); //"assignment4."
 			Critter critter = (Critter) critterType.newInstance();
 			critter.energy = Params.start_energy;
 			critter.x_coord = getRandomInt(Params.world_width);
 			critter.y_coord = getRandomInt(Params.world_height);
 			population.add(critter);
+			world[critter.y_coord][critter.x_coord].add(critter);
 		} catch (ClassNotFoundException e) {
 			throw new InvalidCritterException(critter_class_name);
 		} catch (InstantiationException e) {
@@ -353,26 +362,68 @@ public abstract class Critter {
 	    for(Critter c: population) {
 	        c.doTimeStep();
 	        c.energy -= Params.rest_energy_cost;
-	        world[c.y_coord][c.x_coord].add(c);
         }
 
         for(int y = 0; y < Params.world_height; y++) {
 	        for (int x = 0; x < Params.world_width; x++) {
 	            ArrayList<Critter> cell = world[y][x];
 	            while(cell.size() > 1) { //while multiple critters are on the same spot
-                    cell.get(0).fight(cell.get(1).toString());
+					Critter A = cell.get(0);
+					Critter B = cell.get(1);
 
-                    //removes critter from the cell if it has moved
-                    for(Critter c: world[y][x]) {
-                        if(!c.compareLocation(x,y)){
-                            world[y][x].remove(c);
-                        }
-                    }
+					A.hasFought = true;
+                    boolean AwantsToFight = A.fight(B.toString());
+
+                    B.hasFought = true;
+					boolean BwantsToFight = B.fight(A.toString());
+
+					if((A.x_coord == B.x_coord) && (A.y_coord == B.y_coord)) {
+						int A_roll;
+						int B_roll;
+
+						if(AwantsToFight) {
+							A_roll = getRandomInt(A.energy);
+						} else {
+							A_roll = 0;
+						}
+
+						if(BwantsToFight) {
+							B_roll = getRandomInt(B.energy);
+						} else {
+							B_roll = 0;
+						}
+
+						//A wins
+						if(A_roll >= B_roll) {
+							A.energy += (B.energy/2);
+							population.remove(B);
+							cell.remove(B);
+						}
+
+						//B wins
+						else {
+							B.energy += (A.energy/2);
+							population.remove(A);
+							cell.remove(A);
+						}
+					}
+
+//                    //removes critter from the cell if it has moved
+//                    for(Critter c: world[y][x]) {
+//                        if(!c.compareLocation(x,y)){
+//                            world[y][x].remove(c);
+//                        }
+//                    }
+
+
                 }
             }
         }
 
-
+		for(Critter c: population) {
+	    	c.hasMoved =  false;
+	    	c.hasFought = false;
+		}
 
 		// Complete this method.
 	}
@@ -404,7 +455,7 @@ public abstract class Critter {
 			int y = c.y_coord;
 
 			String currentRow = world.get(y);
-			String newRow = currentRow.substring(0,x) + c.toString() + currentRow.substring(x+1);
+			String newRow = currentRow.substring(0, x + 1) + c.toString() + currentRow.substring(x + 2);
 			world.set(y,newRow);
 		}
 

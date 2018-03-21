@@ -78,7 +78,7 @@ public class Main {
         	String input = kb.nextLine();
         	
         	//remove this
-        	fakeMake();
+//        	fakeMake();
         	
         	if(input.indexOf("q") != -1) {
         		if(processQuit(input)) {
