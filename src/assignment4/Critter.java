@@ -52,50 +52,55 @@ public abstract class Critter {
 	private int y_coord;
 	
 	protected final void walk(int direction) {
-		switch (direction) {
-			case 0:
-				x_coord++;
-				break;
-
-			case 1:
-				x_coord++;
-				y_coord--;
-				break;
-
-			case 2:
-				y_coord--;
-				break;
-
-			case 3:
-				x_coord--;
-				y_coord--;
-				break;
-
-			case 4:
-				x_coord--;
-				break;
-
-			case 5:
-				x_coord--;
-				y_coord++;
-				break;
-
-			case 6:
-				y_coord++;
-				break;
-
-			case 7:
-				x_coord++;
-				y_coord++;
-				break;
-		}
-
+	    move(direction);
+	    energy -= Params.walk_energy_cost;
 	}
 	
 	protected final void run(int direction) {
-		walk(direction);
-		walk(direction);
+		move(direction);
+		move(direction);
+		energy -= Params.run_energy_cost;
 	}
+
+	private final void move(int direction) {
+        switch (direction) {
+            case 0:
+                x_coord++;
+                break;
+
+            case 1:
+                x_coord++;
+                y_coord--;
+                break;
+
+            case 2:
+                y_coord--;
+                break;
+
+            case 3:
+                x_coord--;
+                y_coord--;
+                break;
+
+            case 4:
+                x_coord--;
+                break;
+
+            case 5:
+                x_coord--;
+                y_coord++;
+                break;
+
+            case 6:
+                y_coord++;
+                break;
+
+            case 7:
+                x_coord++;
+                y_coord++;
+                break;
+        }
+    }
 	
 	protected final void reproduce(Critter offspring, int direction) {
 	}
@@ -240,7 +245,6 @@ public abstract class Critter {
 		// Complete this method.
 	}
 
-	//TODO make the Critters represented by different symbols
 	public static void displayWorld() {
 
 		//create the top and bottom border and empty world row
@@ -268,7 +272,7 @@ public abstract class Critter {
 			int y = c.y_coord;
 
 			String currentRow = world.get(y);
-			String newRow = currentRow.substring(0,x) + "@" + currentRow.substring(x+1);
+			String newRow = currentRow.substring(0,x) + c.toString() + currentRow.substring(x+1);
 		}
 
 		//Print each row of the world
