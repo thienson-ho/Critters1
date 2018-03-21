@@ -5,6 +5,7 @@ package assignment4;
  * Example critter
  * Do not change or submit this file.
  */
+
 public class Craig extends Critter {
 	
 	@Override
@@ -26,7 +27,7 @@ public class Craig extends Critter {
 	@Override
 	public void doTimeStep() {
 		/* take one step forward */
-		walk(dir);
+//		walk(dir);
 		
 		if (getEnergy() > 150) {
 			Craig child = new Craig();

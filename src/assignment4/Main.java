@@ -75,12 +75,12 @@ public class Main {
         boolean quitFlag = true;
         
         //remove this
-        fakeMake();
-        
+//        fakeMake();
+
         while(quitFlag) {
         	System.out.print("critters> ");
         	String input = kb.nextLine();
-        	
+
         	if(input.indexOf("q") != -1) {
         		if(processQuit(input)) {
         			quitFlag = false;
