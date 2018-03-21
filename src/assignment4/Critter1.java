@@ -1,9 +1,9 @@
 package assignment4;
 
 public class Critter1 extends Critter {
+    private int venom;  //venom == instant win in fights
 
     public Critter1() {
-
     }
 
     @Override
