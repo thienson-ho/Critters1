@@ -72,19 +72,21 @@ public class Main {
         /* Write your code below. */
         
         boolean errorFlag = false;
-        boolean quitFlag = true; 
+        boolean quitFlag = true;
+        
+        //remove this
+        fakeMake();
+        
         while(quitFlag) {
         	System.out.print("critters> ");
         	String input = kb.nextLine();
         	
-        	//remove this
-        	fakeMake();
-        	
         	if(input.indexOf("q") != -1) {
         		if(processQuit(input)) {
         			quitFlag = false;
+        		}else{
+        			System.out.println("invalid command: " + input);
         		}
-        		System.out.println("invalid command: " + input);
         	}else if(input.indexOf("s") != -1) {
         		String newInput = input.replaceAll(" ","");
             	newInput = newInput.replaceAll("	", "");
@@ -219,7 +221,13 @@ public class Main {
     			goodElements.add(x);
     		}
     	}
-    	if(length == 2) {
+    	if(length == 1) {
+    		try {
+    			Critter.makeCritter(goodElements.get(0));
+    		}catch(Exception e) {
+    			return false;
+    		}
+    	}else if(length == 2) {
     		try{
     			int loop = Integer.parseInt(goodElements.get(1),10);
     			if(loop <= 0) {
