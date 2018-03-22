@@ -219,6 +219,9 @@ public abstract class Critter {
      */
 	protected final void reproduce(Critter offspring, int direction) {
 //		System.out.println("Reproducing");
+		if(this.energy < Params.min_reproduce_energy) {
+			return;
+		}
 		this.energy = (this.energy + 1)/2;
 		offspring.energy = (this.energy)/2;
 		int[] offspringCoords = move(direction);
