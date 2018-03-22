@@ -203,7 +203,7 @@ public abstract class Critter {
     private boolean isOccupied(int x, int y) {
 	    for(Critter c: population) {
 	        if(c.compareLocation(x,y)) {
-                System.out.println("OCCUPIED!");
+//                System.out.println("OCCUPIED!");
 
                 return true;
             }
@@ -415,13 +415,35 @@ public abstract class Critter {
 	        c.doTimeStep();
         }
 
+        ArrayList<ArrayList<ArrayList<Critter>>> world = new ArrayList<ArrayList<ArrayList<Critter>>>();
+		for(int y = 0; y < Params.world_height; y++) {
+			world.add(new ArrayList<ArrayList<Critter>>());
+			for (int x = 0; x < Params.world_width; x++) {
+				world.get(y).add(new ArrayList<Critter>());
+			}
+		}
+
+//		System.out.println(world.size());
+//		System.out.println(world.get(0).size());
+
         //Find all encounters
         ArrayList<ArrayList<Critter>> encounters = new ArrayList<>();
-        for(int y = 0; y < Params.world_height; y++) {
+//        for(int y = 0; y < Params.world_height; y++) {
+//	        for (int x = 0; x < Params.world_width; x++) {
+//				encounters.add(getCrittersAtLocation(x,y));
+//            }
+//        }
+		for (Critter c: population) {
+			world.get(c.y_coord).get(c.x_coord).add(c);
+		}
+
+		for(int y = 0; y < Params.world_height; y++) {
 	        for (int x = 0; x < Params.world_width; x++) {
-				encounters.add(getCrittersAtLocation(x,y));
+				encounters.add(world.get(y).get(x));
             }
         }
+
+
 
         //Settle encounters
 		for(ArrayList<Critter> cell: encounters) {
