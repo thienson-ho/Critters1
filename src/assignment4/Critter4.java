@@ -1,3 +1,15 @@
+/* CRITTERS Critter4.java
+ * EE422C Project 4 submission by
+ * Replace <...> with your actual data.
+ * <ThienSon Ho>
+ * <tsh848>
+ * <15505>
+ * <Arjun Singh>
+ * <AS78363>
+ * <15505>
+ * Slip days used: <0>
+ * Spring 2018
+ */
 package assignment4;
 
 import java.util.ArrayList;
@@ -7,11 +19,13 @@ public class Critter4 extends Critter{
 	int rand;
 	int proCreate;
 	int reload;
+	int algaeKill;
 	
 	public Critter4() {
 		rand = Critter.getRandomInt(8);
-		proCreate = 0;
+		proCreate = -5;
 		reload = 5;
+		algaeKill = 0;
 	}
 	
 	public Critter4(int limit) {
@@ -41,6 +55,10 @@ public class Critter4 extends Critter{
 		}
 	}
 	public boolean fight(String opponent) {
+		if(opponent.equals("@")) {
+			algaeKill++;
+			return true;
+		}
 		if(this.getEnergy() > 50) {
 			proCreate--;
 			return true;
@@ -51,4 +69,25 @@ public class Critter4 extends Critter{
 	public String toString() {
 		return("4");
 	}
+	
+	public static void runStats(java.util.List<Critter> critter4s) {
+
+        int algaeFought = 0;
+        int army = 0;
+
+        for (Object obj : critter4s) {
+            Critter4 c = (Critter4) obj;
+            algaeFought += c.algaeKill;
+            army++;
+        }
+        if(army > 1) {
+        	System.out.println(army + " Critter4s threw hands with " + algaeFought + " @");
+        }else if(army < 1) {
+        	System.out.println("R.I.P. Army");
+        }else if(army == 1 && critter4s.size() != 1){
+        	System.out.println(army + " Critter4 threw hands with " + algaeFought + " @");
+        }else {
+        	System.out.println("A Critter4 threw hands with " + algaeFought + " @");
+        }
+    }
 }
