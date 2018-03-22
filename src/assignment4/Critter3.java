@@ -7,13 +7,14 @@ public class Critter3 extends Critter{
 	static int count = 0;
 	static ArrayList<int[]> position = new ArrayList<int[]>();
 	int index;
-	int life = 10;
+	int life;
 	
 	public Critter3() {
 		count++;
 		this.index = count - 1;
 		int[] newVal = {0,0,this.getEnergy()};
 		position.add(newVal);
+		life = 1000;
 	}
 	
 	//          2
@@ -23,9 +24,10 @@ public class Critter3 extends Critter{
 	//        / | \
 	//       5  V  7
 	//          6
-	public Critter3(int direction, int index) {
+	public Critter3(int direction, int index, int life) {
 		int x = position.get(index)[0];
 		int y = position.get(index)[1];
+		this.life = life;
 		switch (direction) {
         case 0:
         	int[] newVal0 = {x - 1, y, this.getEnergy()};
@@ -173,9 +175,10 @@ public class Critter3 extends Critter{
 					}
 				}
 				
-				if(isUnique) {
+				if(isUnique && life > 0) {
+					life--;
 					walk((i + rand) % 8);
-					Critter3 newCritter = new Critter3();
+					Critter3 newCritter = new Critter3((i+rand) %  8,this.index,life%10);
 					reproduce(newCritter, (i + rand + 4) % 8);
 				}
 			}
