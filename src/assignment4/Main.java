@@ -80,7 +80,7 @@ public class Main {
 //        fakeMake();
 
         while(quitFlag) {
-        	System.out.print("critters> ");
+        	System.out.print("critters>");
         	String input = kb.nextLine();
 
         	if(input.indexOf("q") != -1) {

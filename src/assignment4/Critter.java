@@ -582,8 +582,8 @@ public abstract class Critter {
 		//Bottom border
 		System.out.println(border);
 
-		System.out.println("Number of critters: " + population.size());
-		Critter.runStats(population);
+//		System.out.println("Number of critters: " + population.size());
+//		Critter.runStats(population);
 //		for(Critter c: population) {
 //			System.out.println("X: " + c.x_coord);
 //			System.out.println("Y: " + c.y_coord);
