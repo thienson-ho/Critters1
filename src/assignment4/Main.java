@@ -209,7 +209,7 @@ public class Main {
     			}
     			return true;
     		}catch(Exception e) {
-    			return false;
+				System.out.println("error Processing: " + input);
     		}
     	}
     	return false;
@@ -228,14 +228,12 @@ public class Main {
     	}
     	if(length == 1) {
     		try{
-    			/*
+
     			List<Critter> critterList = Critter.getInstances(goodElements.get(0));
     			Class critterType = Class.forName(myPackage + "." + goodElements.get(0));
-    			Critter.runStats(critterList);
-    			Method m = critterType.getMethod("runStats", critterList.getClass());
-    			critterType.m(critterList);
-    			return true;
-    			*/
+    			Method m = critterType.getMethod("runStats", java.util.List.class);
+				m.invoke(critterList.getClass(), critterList);
+				return true;
     		}catch(Exception e) {
     			return false;
     		}
