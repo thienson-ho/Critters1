@@ -13,7 +13,7 @@ import java.awt.Point;
 import java.util.List;
 public class A4SampleTest2 {
 
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -123,6 +123,8 @@ public class A4SampleTest2 {
 		runner.setY_coord(y);
 		fighter.setX_coord(x);
 		fighter.setY_coord(y);
+
+		Critter.displayWorld();
 
 		assertEquals(num, TestCritter.getPopulation().size());
 		Critter.worldTimeStep();

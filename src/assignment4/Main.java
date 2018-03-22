@@ -138,7 +138,6 @@ public class Main {
         	}
         	
         }
-        System.out.println("remove this done");
         /* Write your code above */
         System.out.flush();
 
@@ -255,6 +254,7 @@ public class Main {
     	if(length == 1) {
     		try {
     			Critter.makeCritter(goodElements.get(0));
+    			return true;
     		}catch(Exception e) {
     			return false;
     		}

@@ -35,10 +35,20 @@ public abstract class Critter {
 	}
 	
 	private static java.util.Random rand = new java.util.Random();
+
+    /**
+     * Returns a random int from 0 to max exclusive
+     * @param max the highest number you want + 1
+     * @return an int from 0 to max - 1
+     */
 	public static int getRandomInt(int max) {
 		return rand.nextInt(max);
 	}
-	
+
+    /**
+     * Sets the random generator seed for simpler testing
+     * @param new_seed
+     */
 	public static void setSeed(long new_seed) {
 		rand = new java.util.Random(new_seed);
 	}
@@ -55,7 +65,11 @@ public abstract class Critter {
 	
 	private int x_coord;
 	private int y_coord;
-	
+
+    /**
+     * Deducts walking energy and moves 1 step in the specified direction
+     * @param direction 0 to 7.
+     */
 	protected final void walk(int direction) {
         energy -= Params.walk_energy_cost;
 
@@ -76,7 +90,11 @@ public abstract class Critter {
             }
         }
 	}
-	
+
+    /**
+     * Deducts running energy and moves the critter 2 steps in the specified direction if possible
+     * @param direction 0 to 7
+     */
 	protected final void run(int direction) {
 		energy -= Params.run_energy_cost;
 
@@ -108,11 +126,11 @@ public abstract class Critter {
         }
 	}
 
-	//TODO change this
-	private boolean isOccupied(int x, int y) {
-		return false;
-    }
-
+    /**
+     * Helper function for walk and run to give the new coordinates of the desired move
+     * @param direction 0 to 7
+     * @return and int[] array containing the new x and y coordinates
+     */
 	private int[] move(int direction) {
 	    int[] coords = new int[2];
 	    //[0] = x
@@ -175,9 +193,32 @@ public abstract class Critter {
 
         return coords;
     }
-	
+
+    /**
+     * Tests to see if location isOccupied by any creatures
+     * @param x
+     * @param y
+     * @return
+     */
+    private boolean isOccupied(int x, int y) {
+	    for(Critter c: population) {
+	        if(c.compareLocation(x,y)) {
+                System.out.println("OCCUPIED!");
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * Makes the Critter reproduce a child using half of its energy in an adjacent spot
+     * @param offspring the child to be created
+     * @param direction 0 to 7 to specify the location of the child after birth
+     */
 	protected final void reproduce(Critter offspring, int direction) {
-		System.out.println("Reproducing");
+//		System.out.println("Reproducing");
 		this.energy = (this.energy + 1)/2;
 		offspring.energy = (this.energy)/2;
 		int[] offspringCoords = move(direction);
@@ -186,7 +227,16 @@ public abstract class Critter {
 		babies.add(offspring);
 	}
 
+    /**
+     * Is called for every Critter during worldTimeStep. This is where each Critter specifies its normal actions
+     */
 	public abstract void doTimeStep();
+
+    /**
+     * Determines what a Critter does when it encounters another Critter
+     * @param opponent the toString of the other Critter it encounters
+     * @return true if it wants to fight, false if it doesn't
+     */
 	public abstract boolean fight(String opponent);
 	
 	/**
@@ -325,6 +375,12 @@ public abstract class Critter {
 		// Complete this method.
 	}
 
+    /**
+     * Checks to see if the Critter's coordinates are equal to the specified paramters
+     * @param x the x coordinate to be compared to
+     * @param y the y coordinate to be compared to
+     * @return true if the locations are equal, false if not
+     */
 	private boolean compareLocation(int x, int y) {
 	    if(x == x_coord && y == y_coord) {
 	        return true;
@@ -333,6 +389,12 @@ public abstract class Critter {
         return false;
     }
 
+    /**
+     * Makes and ArrayList of all Critters that occupy a specific location
+     * @param x coordinate
+     * @param y coordinate
+     * @return ArrayList of Critters at location (x,y)
+     */
     private static ArrayList<Critter> getCrittersAtLocation(int x, int y) {	//returns an arraylist of critters in a location
 		ArrayList<Critter> critters = new ArrayList<>();
 		for(Critter c: population) {
@@ -344,7 +406,9 @@ public abstract class Critter {
 		return critters;
 	}
 
-	//TODO complete worldTimeStep
+    /**
+     * Calls doTimeStep for everyCritter, handles all Critter encounters, and updates the population as necessary
+     */
 	public static void worldTimeStep() {
 	    for(Critter c: population) {
 	        c.doTimeStep();
@@ -368,9 +432,26 @@ public abstract class Critter {
 
 				Critter A = cell.get(0);
 				Critter B = cell.get(1);
-				System.out.println(A.toString() + "'s Energy: " + A.energy);
-				System.out.println(B.toString() + "'s Energy: " + B.energy);
-				System.out.println("Fight between " + A.toString() + " and " + B.toString());
+
+				int fightLocationX = A.x_coord;
+				int fightLocationY = B.y_coord;
+
+				if(A.energy <= 0) {
+				    population.remove(A);
+				    cell.remove(A);
+				    continue;
+                }
+
+                if (B.energy <= 0) {
+				    population.remove(B);
+				    cell.remove(B);
+				    continue;
+                }
+
+
+//				System.out.println(A.toString() + "'s Energy: " + A.energy);
+//				System.out.println(B.toString() + "'s Energy: " + B.energy);
+//				System.out.println("Fight between " + A.toString() + " and " + B.toString());
 
 				A.hasFought = true;
 				boolean AwantsToFight = A.fight(B.toString());
@@ -378,7 +459,21 @@ public abstract class Critter {
 				B.hasFought = true;
 				boolean BwantsToFight = B.fight(A.toString());
 
+				if(!A.compareLocation(fightLocationX,fightLocationY) && !B.compareLocation(fightLocationX,fightLocationY)) {
+				    cell.remove(A);
+				    cell.remove(B);
+				    continue;
+                }
+				else if(!A.compareLocation(fightLocationX,fightLocationY) && B.compareLocation(fightLocationX,fightLocationY)) {
+				    cell.remove(A);
+				    continue;
+                } else if(A.compareLocation(fightLocationX,fightLocationY) && !B.compareLocation(fightLocationX,fightLocationY)) {
+				    cell.remove(B);
+				    continue;
+                }
+
 				if ((A.x_coord == B.x_coord) && (A.y_coord == B.y_coord)) {
+
 					int A_roll;
 					int B_roll;
 
@@ -430,6 +525,9 @@ public abstract class Critter {
 		}
 	}
 
+    /**
+     * ASCII representation of the world
+     */
 	public static void displayWorld() {
 
 		//create the top and bottom border and empty world row
@@ -469,8 +567,8 @@ public abstract class Critter {
 		//Bottom border
 		System.out.println(border);
 
-		System.out.println("Number of critters: " + population.size());
-		Critter.runStats(population);
+//		System.out.println("Number of critters: " + population.size());
+//		Critter.runStats(population);
 //		for(Critter c: population) {
 //			System.out.println("X: " + c.x_coord);
 //			System.out.println("Y: " + c.y_coord);
