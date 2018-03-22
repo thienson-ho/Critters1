@@ -14,9 +14,7 @@ package assignment4;
 
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.SortedMap;
 
 /* see the PDF for descriptions of the methods and fields in this class
  * you may add fields, methods or inner classes to Critter ONLY if you make your additions private
@@ -28,6 +26,8 @@ public abstract class Critter {
 	private static String myPackage;
 	private	static List<Critter> population = new java.util.ArrayList<Critter>();
 	private static List<Critter> babies = new java.util.ArrayList<Critter>();
+	private static ArrayList<Critter>[][] world =
+            new ArrayList[Params.world_height][Params.world_width];
 
 	// Gets the package name.  This assumes that Critter and its subclasses are all in the same package.
 	static {
@@ -59,10 +59,16 @@ public abstract class Critter {
 	protected final void walk(int direction) {
         energy -= Params.walk_energy_cost;
 
-         if(!hasMoved && !hasFought) {
+        if(hasMoved) {
+            return;
+        }
+        //timeStep walk
+        else if(!hasMoved && !hasFought) {
+        	world[y_coord][x_coord].remove(this);
             int[] newCoord = move(direction);
             x_coord = newCoord[0];
             y_coord = newCoord[1];
+            world[y_coord][x_coord].add(this);
             hasMoved =  true;
         }
 
@@ -70,8 +76,10 @@ public abstract class Critter {
         else if(!hasMoved && hasFought) {
             int[] newCoord = move(direction);
             if(!isOccupied(newCoord[0],newCoord[1])) {
+				world[y_coord][x_coord].remove(this);
                 x_coord = newCoord[0];
                 y_coord = newCoord[1];
+				world[y_coord][x_coord].add(this);
                 hasMoved =  true;
             }
         }
@@ -80,13 +88,18 @@ public abstract class Critter {
 	protected final void run(int direction) {
 		energy -= Params.run_energy_cost;
 
-		if(!hasMoved && !hasFought) {
+		if(hasMoved) {
+		    return;
+        }
+        else if(!hasMoved && !hasFought) {
+			world[y_coord][x_coord].remove(this);
 		    int[] newCoord = move(direction);
             x_coord = newCoord[0];
             y_coord = newCoord[1];
             newCoord = move(direction);
             x_coord = newCoord[0];
             y_coord = newCoord[1];
+			world[y_coord][x_coord].add(this);
             hasMoved = true;
         }
 
@@ -98,8 +111,10 @@ public abstract class Critter {
             y_coord = newCoord[1];
             newCoord = move(direction);
             if(!isOccupied(newCoord[0],newCoord[1])) {
+            	world[holdY][holdX].remove(this);
                 x_coord = newCoord[0];
                 y_coord = newCoord[1];
+                world[y_coord][x_coord].add(this);
                 hasMoved =  true;
             }else{
                 x_coord = holdX;
@@ -108,9 +123,14 @@ public abstract class Critter {
         }
 	}
 
-	//TODO change this
 	private boolean isOccupied(int x, int y) {
-		return false;
+        ArrayList<Critter> space = world[y][x];
+
+        if(space.size() > 0) {  //not empty
+            return true;
+        }
+
+        return false;
     }
 
 	private int[] move(int direction) {
@@ -122,31 +142,40 @@ public abstract class Critter {
             case 0:
                 coords[0] = x_coord + 1;
                 coords[1] = y_coord;
+//                x_coord++;
                 break;
 
             case 1:
                 coords[0] = x_coord + 1;
                 coords[1] = y_coord - 1;
+//                x_coord++;
+//                y_coord--;
                 break;
 
             case 2:
                 coords[0] = x_coord;
                 coords[1] = y_coord - 1;
+//                y_coord--;
                 break;
 
             case 3:
                 coords[0] = x_coord - 1;
                 coords[1] = y_coord - 1;
+//                x_coord--;
+//                y_coord--;
                 break;
 
             case 4:
                 coords[0] = x_coord - 1;
                 coords[1] = y_coord;
+//                x_coord--;
                 break;
 
             case 5:
                 coords[0] = x_coord - 1;
                 coords[1] = y_coord + 1;
+//                x_coord--;
+//                y_coord++;
                 break;
 
             case 6:
@@ -158,16 +187,18 @@ public abstract class Critter {
             case 7:
                 coords[0] = x_coord + 1;
                 coords[1] = y_coord + 1;
+//                x_coord++;
+//                y_coord++;
                 break;
         }
 
-        if(coords[0] >= Params.world_width) {
+        if(coords[0] > Params.world_width) {
             coords[0] = 0;
         } else if(coords[0] < 0) {
             coords[0] = Params.world_width - 1;
         }
 
-        if(coords[1] >= Params.world_height) {
+        if(coords[1] > Params.world_height) {
             coords[1] = 0;
         } else if(coords[1] < 0) {
             coords[1] = Params.world_height - 1;
@@ -177,13 +208,6 @@ public abstract class Critter {
     }
 	
 	protected final void reproduce(Critter offspring, int direction) {
-		System.out.println("Reproducing");
-		this.energy = (this.energy + 1)/2;
-		offspring.energy = (this.energy)/2;
-		int[] offspringCoords = move(direction);
-		offspring.x_coord = offspringCoords[0];
-		offspring.y_coord = offspringCoords[1];
-		babies.add(offspring);
 	}
 
 	public abstract void doTimeStep();
@@ -207,7 +231,7 @@ public abstract class Critter {
 			critter.x_coord = getRandomInt(Params.world_width);
 			critter.y_coord = getRandomInt(Params.world_height);
 			population.add(critter);
-
+			world[critter.y_coord][critter.x_coord].add(critter);
 		} catch (ClassNotFoundException e) {
 			throw new InvalidCritterException(critter_class_name);
 		} catch (InstantiationException e) {
@@ -227,7 +251,7 @@ public abstract class Critter {
 	public static List<Critter> getInstances(String critter_class_name) throws InvalidCritterException {
 		List<Critter> result = new java.util.ArrayList<Critter>();
 		try {
-			Class critterType = Class.forName(myPackage + "." + critter_class_name);
+			Class critterType = Class.forName("assignment4." + critter_class_name);
 			for (Critter c: population) {
 				if(critterType.isInstance(c)) {
 					result.add(c);
@@ -333,17 +357,6 @@ public abstract class Critter {
         return false;
     }
 
-    private static ArrayList<Critter> getCrittersAtLocation(int x, int y) {	//returns an arraylist of critters in a location
-		ArrayList<Critter> critters = new ArrayList<>();
-		for(Critter c: population) {
-			if((c.x_coord == x) && (c.y_coord == y)) {
-				critters.add(c);
-			}
-		}
-
-		return critters;
-	}
-
 	//TODO complete worldTimeStep
 	public static void worldTimeStep() {
 	    for(Critter c: population) {
@@ -351,83 +364,68 @@ public abstract class Critter {
 	        c.energy -= Params.rest_energy_cost;
         }
 
-        population.addAll(babies);
-	    babies.clear();
-
-        ArrayList<ArrayList<Critter>> encounters = new ArrayList<>();
-
         for(int y = 0; y < Params.world_height; y++) {
 	        for (int x = 0; x < Params.world_width; x++) {
-				encounters.add(getCrittersAtLocation(x,y));
+	            ArrayList<Critter> cell = world[y][x];
+	            while(cell.size() > 1) { //while multiple critters are on the same spot
+					Critter A = cell.get(0);
+					Critter B = cell.get(1);
+
+					A.hasFought = true;
+                    boolean AwantsToFight = A.fight(B.toString());
+
+                    B.hasFought = true;
+					boolean BwantsToFight = B.fight(A.toString());
+
+					if((A.x_coord == B.x_coord) && (A.y_coord == B.y_coord)) {
+						int A_roll;
+						int B_roll;
+
+						if(AwantsToFight) {
+							A_roll = getRandomInt(A.energy);
+						} else {
+							A_roll = 0;
+						}
+
+						if(BwantsToFight) {
+							B_roll = getRandomInt(B.energy);
+						} else {
+							B_roll = 0;
+						}
+
+						//A wins
+						if(A_roll >= B_roll) {
+							A.energy += (B.energy/2);
+							population.remove(B);
+							cell.remove(B);
+						}
+
+						//B wins
+						else {
+							B.energy += (A.energy/2);
+							population.remove(A);
+							cell.remove(A);
+						}
+					}
+
+//                    //removes critter from the cell if it has moved
+//                    for(Critter c: world[y][x]) {
+//                        if(!c.compareLocation(x,y)){
+//                            world[y][x].remove(c);
+//                        }
+//                    }
+
+
+                }
             }
         }
 
-
-		for(ArrayList<Critter> cell: encounters) {
-			while (cell.size() > 1) { //while multiple critters are on the same spot
-
-				Critter A = cell.get(0);
-				Critter B = cell.get(1);
-				System.out.println(A.toString() + "'s Energy: " + A.energy);
-				System.out.println(B.toString() + "'s Energy: " + B.energy);
-				System.out.println("Fight between " + A.toString() + " and " + B.toString());
-
-				A.hasFought = true;
-				boolean AwantsToFight = A.fight(B.toString());
-
-				B.hasFought = true;
-				boolean BwantsToFight = B.fight(A.toString());
-
-				if ((A.x_coord == B.x_coord) && (A.y_coord == B.y_coord)) {
-					int A_roll;
-					int B_roll;
-
-					if (AwantsToFight) {
-						A_roll = getRandomInt(A.energy);
-					} else {
-						A_roll = 0;
-					}
-
-					if (BwantsToFight) {
-						B_roll = getRandomInt(B.energy);
-					} else {
-						B_roll = 0;
-					}
-
-					//A wins
-					if (A_roll >= B_roll) {
-						A.energy += (B.energy / 2);
-						population.remove(B);
-						cell.remove(B);
-					}
-
-					//B wins
-					else {
-						B.energy += (A.energy / 2);
-						population.remove(A);
-						cell.remove(A);
-					}
-				}
-			}
-
-//			for (Critter c : population) {
-//				c.hasMoved = false;
-//				c.hasFought = false;
-//			}
-
-			for (Iterator<Critter> iterator = population.iterator(); iterator.hasNext();) {
-				Critter c = iterator.next();
-				c.hasMoved = false;
-				c.hasFought = false;
-				if (c.energy <= 0) {
-					// Remove the current element from the iterator and the list.
-					iterator.remove();
-				}
-			}
-
-			// Complete this method.
-
+		for(Critter c: population) {
+	    	c.hasMoved =  false;
+	    	c.hasFought = false;
 		}
+
+		// Complete this method.
 	}
 
 	public static void displayWorld() {
@@ -469,11 +467,6 @@ public abstract class Critter {
 		//Bottom border
 		System.out.println(border);
 
-		System.out.println("Number of critters: " + population.size());
-		Critter.runStats(population);
-//		for(Critter c: population) {
-//			System.out.println("X: " + c.x_coord);
-//			System.out.println("Y: " + c.y_coord);
-//		}
+
 	}
 }

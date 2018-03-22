@@ -8,12 +8,13 @@ public class Critter1 extends Critter {
 
     @Override
     public void doTimeStep() {
-        walk(0);
+
     }
 
     @Override
     public boolean fight(String opponent) {
-        return true;
+
+        return false;
     }
 
     @Override
