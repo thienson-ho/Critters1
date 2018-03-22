@@ -82,23 +82,37 @@ public class Main {
         while(quitFlag) {
         	System.out.print("critters>");
         	String input = kb.nextLine();
+        	String inputF = input.replaceAll(" ","");
+        	inputF = inputF.replaceAll("	","");
 
-        	if(input.indexOf("q") != -1) {
+        	if(input.indexOf("q") != -1 && inputF.indexOf("q") == 0) {
+        		String newInput = input.replaceAll(" ","");
+        		newInput = newInput.replaceAll("	","");
+
         		if(processQuit(input)) {
         			quitFlag = false;
-        		}else{
+        		}else if(newInput.indexOf("quit") == 0 && input.contains("quit")){
+        			System.out.println("error processing: " + input);
+				}else{
         			System.out.println("invalid command: " + input);
         		}
-        	}else if(input.indexOf("s") != -1) {
+        	}else if(input.indexOf("s") != -1 && inputF.indexOf("s") == 0) {
         		String newInput = input.replaceAll(" ","");
             	newInput = newInput.replaceAll("	", "");
-        		if(newInput.indexOf("show") == 0 && input.indexOf("show") != -1 && processShow(newInput)) {
-        			Critter.displayWorld();
+        		if(newInput.indexOf("show") == 0 && input.indexOf("show") != -1) {
+        			if(processShow(input)) {
+						Critter.displayWorld();
+					}
+					else{
+						System.out.println("error processing: " + input);
+					}
         		
-        		}else if(newInput.indexOf("step") == 0 && input.indexOf("step") != -1 && processStep(input.replace("step", ""))) {
-        			if(newInput.equals("step")) {
+        		}else if(newInput.indexOf("step") == 0 && input.indexOf("step") != -1) {
+        			boolean isValidSwitch = processStep(input.replace("step", ""));
+
+        			if(newInput.equals("step") && isValidSwitch) {
         				Critter.worldTimeStep();
-        			}else {
+        			}else if(processStep(input.replace("step", ""))) {
         				newInput = input.replace("step", "");
         				newInput = newInput.replaceAll(" ", "");
         				newInput = newInput.replaceAll("	", "");
@@ -107,21 +121,30 @@ public class Main {
         					Critter.worldTimeStep();
         				}
         			}
+        			else{
+						System.out.println("error processing: " + input);
+					}
         		
-        		}else if(newInput.indexOf("seed") == 0 && input.indexOf("seed") != -1 && processSeed(input.replace("seed", ""))) {
-        			newInput = input.replace("seed", "");
-    				newInput = newInput.replaceAll(" ", "");
-    				newInput = newInput.replaceAll("	", "");
-    				int seed = Integer.parseInt(newInput,10);
-    				Critter.setSeed(seed);
+        		}else if(newInput.indexOf("seed") == 0 && input.indexOf("seed") != -1) {
+        			if(processSeed(input.replace("seed", ""))) {
+						newInput = input.replace("seed", "");
+						newInput = newInput.replaceAll(" ", "");
+						newInput = newInput.replaceAll("	", "");
+						int seed = Integer.parseInt(newInput, 10);
+						Critter.setSeed(seed);
+					}else{
+						System.out.println("error processing: " + input);
+					}
         		
-        		}else if(newInput.indexOf("stats") == 0 && input.indexOf("stats") != -1 && processStats(input.replace("stats", ""))) {
-        			
+        		}else if(newInput.indexOf("stats") == 0 && input.indexOf("stats") != -1) {
+        			if(!processStats(input.replace("stats", ""))){
+						System.out.println("error processing: " + input);
+					}
         		}else{
         			System.out.println("invalid command: " + input);
         		}
         		
-        	}else if(input.indexOf("m") != -1) {
+        	}else if(input.indexOf("m") != -1 && inputF.indexOf("m") == 0) {
         		String newInput = input.replaceAll(" ","");
             	newInput = newInput.replaceAll("	", "");
         		if(newInput.indexOf("make") == 0 && input.indexOf("make") != -1) {
