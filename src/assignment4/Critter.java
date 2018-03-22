@@ -410,120 +410,135 @@ public abstract class Critter {
      * Calls doTimeStep for everyCritter, handles all Critter encounters, and updates the population as necessary
      */
 	public static void worldTimeStep() {
+	    //Do time steps
 	    for(Critter c: population) {
 	        c.doTimeStep();
-	        c.energy -= Params.rest_energy_cost;
         }
 
-        population.addAll(babies);
-	    babies.clear();
-
+        //Find all encounters
         ArrayList<ArrayList<Critter>> encounters = new ArrayList<>();
-
         for(int y = 0; y < Params.world_height; y++) {
 	        for (int x = 0; x < Params.world_width; x++) {
 				encounters.add(getCrittersAtLocation(x,y));
             }
         }
 
-
+        //Settle encounters
 		for(ArrayList<Critter> cell: encounters) {
-			while (cell.size() > 1) { //while multiple critters are on the same spot
+            while (cell.size() > 1) { //while multiple critters are on the same spot
 
-				Critter A = cell.get(0);
-				Critter B = cell.get(1);
+                Critter A = cell.get(0);
+                Critter B = cell.get(1);
 
-				int fightLocationX = A.x_coord;
-				int fightLocationY = B.y_coord;
+                int fightLocationX = A.x_coord;
+                int fightLocationY = B.y_coord;
 
-				if(A.energy <= 0) {
-				    population.remove(A);
-				    cell.remove(A);
-				    continue;
+                if (A.energy <= 0) {
+                    population.remove(A);
+                    cell.remove(A);
+                    continue;
                 }
 
                 if (B.energy <= 0) {
-				    population.remove(B);
-				    cell.remove(B);
-				    continue;
+                    population.remove(B);
+                    cell.remove(B);
+                    continue;
                 }
 
+//                System.out.println(A.toString() + "'s Energy: " + A.energy);
+//                System.out.println(B.toString() + "'s Energy: " + B.energy);
+//                System.out.println("Fight between " + A.toString() + " and " + B.toString());
 
-//				System.out.println(A.toString() + "'s Energy: " + A.energy);
-//				System.out.println(B.toString() + "'s Energy: " + B.energy);
-//				System.out.println("Fight between " + A.toString() + " and " + B.toString());
+                A.hasFought = true;
+                boolean AwantsToFight = A.fight(B.toString());
 
-				A.hasFought = true;
-				boolean AwantsToFight = A.fight(B.toString());
+                B.hasFought = true;
+                boolean BwantsToFight = B.fight(A.toString());
 
-				B.hasFought = true;
-				boolean BwantsToFight = B.fight(A.toString());
-
-				if(!A.compareLocation(fightLocationX,fightLocationY) && !B.compareLocation(fightLocationX,fightLocationY)) {
-				    cell.remove(A);
-				    cell.remove(B);
-				    continue;
-                }
-				else if(!A.compareLocation(fightLocationX,fightLocationY) && B.compareLocation(fightLocationX,fightLocationY)) {
-				    cell.remove(A);
-				    continue;
-                } else if(A.compareLocation(fightLocationX,fightLocationY) && !B.compareLocation(fightLocationX,fightLocationY)) {
-				    cell.remove(B);
-				    continue;
+                if (!A.compareLocation(fightLocationX, fightLocationY) && !B.compareLocation(fightLocationX, fightLocationY)) {
+                    cell.remove(A);
+                    cell.remove(B);
+                    continue;
+                } else if (!A.compareLocation(fightLocationX, fightLocationY) && B.compareLocation(fightLocationX, fightLocationY)) {
+                    cell.remove(A);
+                    continue;
+                } else if (A.compareLocation(fightLocationX, fightLocationY) && !B.compareLocation(fightLocationX, fightLocationY)) {
+                    cell.remove(B);
+                    continue;
                 }
 
-				if ((A.x_coord == B.x_coord) && (A.y_coord == B.y_coord)) {
+                if ((A.x_coord == B.x_coord) && (A.y_coord == B.y_coord)) {
 
-					int A_roll;
-					int B_roll;
+                    int A_roll;
+                    int B_roll;
 
-					if (AwantsToFight) {
-						A_roll = getRandomInt(A.energy);
-					} else {
-						A_roll = 0;
-					}
+                    if (AwantsToFight) {
+                        A_roll = getRandomInt(A.energy);
+                    } else {
+                        A_roll = 0;
+                    }
 
-					if (BwantsToFight) {
-						B_roll = getRandomInt(B.energy);
-					} else {
-						B_roll = 0;
-					}
+                    if (BwantsToFight) {
+                        B_roll = getRandomInt(B.energy);
+                    } else {
+                        B_roll = 0;
+                    }
 
-					//A wins
-					if (A_roll >= B_roll) {
-						A.energy += (B.energy / 2);
-						population.remove(B);
-						cell.remove(B);
-					}
+                    //A wins
+                    if (A_roll >= B_roll) {
+                        A.energy += (B.energy / 2);
+                        population.remove(B);
+                        cell.remove(B);
+                    }
 
-					//B wins
-					else {
-						B.energy += (A.energy / 2);
-						population.remove(A);
-						cell.remove(A);
-					}
-				}
-			}
+                    //B wins
+                    else {
+                        B.energy += (A.energy / 2);
+                        population.remove(A);
+                        cell.remove(A);
+                    }
+                }
+            }
+        }
 
-//			for (Critter c : population) {
-//				c.hasMoved = false;
-//				c.hasFought = false;
-//			}
+        //update rest energy and flags
+        for (Iterator<Critter> iterator = population.iterator(); iterator.hasNext();) {
+            Critter c = iterator.next();
+            c.hasMoved = false;
+            c.hasFought = false;
+            c.energy -= Params.rest_energy_cost;
 
-			for (Iterator<Critter> iterator = population.iterator(); iterator.hasNext();) {
-				Critter c = iterator.next();
-				c.hasMoved = false;
-				c.hasFought = false;
-				if (c.energy <= 0) {
-					// Remove the current element from the iterator and the list.
-					iterator.remove();
-				}
-			}
+            if (c.energy <= 0) {
+                // Remove the current element from the iterator and the list.
+                iterator.remove();
+            }
+        }
 
-			// Complete this method.
+        //create new algae
+        genAlgae();
 
-		}
+        //add babies
+        population.addAll(babies);
+        babies.clear();
+
 	}
+
+	public static void genAlgae() {
+        for(int i = 0; i < Params.refresh_algae_count; i++) {
+            try {
+                Critter.makeCritter("Algae");
+            } catch (Exception e) {
+
+            }
+
+//            Algae algae = new Algae();
+//            algae.setEnergy(Params.start_energy);
+//            algae.setX_coord(getRandomInt(Params.world_width));
+//            algae.setY_coord(getRandomInt(Params.world_height));
+//            population.add(algae);
+//            System.out.println("MAKE ALGAE " + i);
+        }
+    }
 
     /**
      * ASCII representation of the world
@@ -567,8 +582,8 @@ public abstract class Critter {
 		//Bottom border
 		System.out.println(border);
 
-//		System.out.println("Number of critters: " + population.size());
-//		Critter.runStats(population);
+		System.out.println("Number of critters: " + population.size());
+		Critter.runStats(population);
 //		for(Critter c: population) {
 //			System.out.println("X: " + c.x_coord);
 //			System.out.println("Y: " + c.y_coord);
