@@ -9,6 +9,11 @@
  * <15505>
  * Slip days used: <0>
  * Spring 2018
+ * 
+ * The Critter4 class describes a vicious Critter that multiplies and eats all the Algae it can. It is like a microbe
+ * that only feeds on algae, it doesnt  eat any other organism. It will rapidly teraform the map with this and potentially
+ * feed many predators, a bloom.  
+ *  
  */
 package assignment4;
 
@@ -48,7 +53,7 @@ public class Critter4 extends Critter{
 			if(proCreate < 3) {
 				rand = Critter.getRandomInt(8);
 				proCreate++;
-				Critter4 aCritter = new Critter4(proCreate);
+				Critter4 aCritter = new Critter4(-10);
 				
 				reproduce(aCritter, (i+rand)%8);
 			}
