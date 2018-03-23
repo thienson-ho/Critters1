@@ -16,7 +16,6 @@ package assignment4;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.SortedMap;
 
 /* see the PDF for descriptions of the methods and fields in this class
  * you may add fields, methods or inner classes to Critter ONLY if you make your additions private
@@ -47,7 +46,7 @@ public abstract class Critter {
 
     /**
      * Sets the random generator seed for simpler testing
-     * @param new_seed
+     * @param new_seed desired seed to use for Random number generation
      */
 	public static void setSeed(long new_seed) {
 		rand = new java.util.Random(new_seed);
@@ -81,7 +80,7 @@ public abstract class Critter {
         }
 
         //encounters walk
-        else if(!hasMoved && hasFought) {
+        else if(!hasMoved) {
             int[] newCoord = move(direction);
             if(!isOccupied(newCoord[0],newCoord[1])) {
                 x_coord = newCoord[0];
@@ -196,9 +195,9 @@ public abstract class Critter {
 
     /**
      * Tests to see if location isOccupied by any creatures
-     * @param x
-     * @param y
-     * @return
+     * @param x coordinate
+     * @param y coordinate
+     * @return true or false
      */
     private boolean isOccupied(int x, int y) {
 	    for(Critter c: population) {
@@ -249,8 +248,8 @@ public abstract class Critter {
 	 * (Java weirdness: Exception throwing does not work properly if the parameter has lower-case instead of
 	 * upper. For example, if craig is supplied instead of Craig, an error is thrown instead of
 	 * an Exception.)
-	 * @param critter_class_name
-	 * @throws InvalidCritterException
+	 * @param critter_class_name name of the Critter class to make
+	 * @throws InvalidCritterException critter name is not correct
 	 */
 	public static void makeCritter(String critter_class_name) throws InvalidCritterException {
 		try {
@@ -385,28 +384,7 @@ public abstract class Critter {
      * @return true if the locations are equal, false if not
      */
 	private boolean compareLocation(int x, int y) {
-	    if(x == x_coord && y == y_coord) {
-	        return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Makes and ArrayList of all Critters that occupy a specific location
-     * @param x coordinate
-     * @param y coordinate
-     * @return ArrayList of Critters at location (x,y)
-     */
-    private static ArrayList<Critter> getCrittersAtLocation(int x, int y) {	//returns an arraylist of critters in a location
-		ArrayList<Critter> critters = new ArrayList<>();
-		for(Critter c: population) {
-			if((c.x_coord == x) && (c.y_coord == y)) {
-				critters.add(c);
-			}
-		}
-
-		return critters;
+		return x == x_coord && y == y_coord;
 	}
 
     /**
@@ -548,20 +526,13 @@ public abstract class Critter {
 
 	}
 
-	public static void genAlgae() {
+	private static void genAlgae() {
         for(int i = 0; i < Params.refresh_algae_count; i++) {
             try {
                 Critter.makeCritter("Algae");
             } catch (Exception e) {
-
+				System.out.println("error generating Algae");
             }
-
-//            Algae algae = new Algae();
-//            algae.setEnergy(Params.start_energy);
-//            algae.setX_coord(getRandomInt(Params.world_width));
-//            algae.setY_coord(getRandomInt(Params.world_height));
-//            population.add(algae);
-//            System.out.println("MAKE ALGAE " + i);
         }
     }
 
