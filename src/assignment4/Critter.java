@@ -475,13 +475,13 @@ public abstract class Critter {
                     int A_roll;
                     int B_roll;
 
-                    if (AwantsToFight) {
+                    if (AwantsToFight && A.energy > 0) {
                         A_roll = getRandomInt(A.energy);
                     } else {
                         A_roll = 0;
                     }
 
-                    if (BwantsToFight) {
+                    if (BwantsToFight && B.energy > 0) {
                         B_roll = getRandomInt(B.energy);
                     } else {
                         B_roll = 0;

@@ -95,7 +95,7 @@ public class Critter2 extends Critter{
             totalFights += c.fights;
         }
 
-        System.out.print("" + critter2s.size() + " total Critter1's    ");
+        System.out.print("" + critter2s.size() + " total Critter2's    ");
         System.out.print("Runs: " + totalRuns + "    ");
         System.out.print("Walks: " + totalWalks + "    ");
         System.out.println("Fights: " + totalFights);
