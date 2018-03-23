@@ -11,8 +11,6 @@ package assignment4;
  */
 
 public class Params {
-//	public  static int world_width = 160;
-//	public  static int world_height = 80;
 	public  static int world_width = 160;
 	public  static int world_height = 80;
 	public  static int walk_energy_cost = 2;

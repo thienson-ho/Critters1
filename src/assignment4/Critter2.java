@@ -10,6 +10,10 @@
  * Slip days used: <0>
  * Spring 2018
  */
+/**
+ * This critter flips a coin to determine if it wants to walk or run during each time step. It keeps track of the total
+ * times it has walked and ran and the number of fights it has been in.
+ */
 package assignment4;
 
 public class Critter2 extends Critter{
@@ -18,6 +22,9 @@ public class Critter2 extends Critter{
     private int runs;
     private int fights;
 
+    /**
+     * Default constructor
+     */
     public Critter2(){
         walks = 0;
         runs = 0;
@@ -25,7 +32,9 @@ public class Critter2 extends Critter{
 
     }
 
-    //flips a coin to either walk or run
+    /**
+     * Flips a coin to determine if the critter runs or walks
+     */
     private void walkOrRun() {
         int rand = Critter.getRandomInt(2);
 
@@ -38,6 +47,9 @@ public class Critter2 extends Critter{
         }
     }
 
+    /**
+     * Walks or runs. Reproduces if possible.
+     */
     @Override
     public void doTimeStep() {
         walkOrRun();
@@ -47,6 +59,11 @@ public class Critter2 extends Critter{
         }
     }
 
+    /**
+     * Attempts to runaway from encounters with the same species. Fights all other species.
+     * @param opponent the toString of the other Critter it encounters
+     * @return
+     */
     @Override
     public boolean fight(String opponent) {
         fights++;
@@ -61,7 +78,10 @@ public class Critter2 extends Critter{
 
     }
 
-
+    /**
+     * Prints the total number of walks, runs, and fights for all Critter2's
+     * @param critter2s list of Critter2's from the population
+     */
     public static void runStats(java.util.List<Critter> critter2s) {
 
         int totalWalks =  0;
