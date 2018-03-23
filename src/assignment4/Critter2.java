@@ -12,7 +12,7 @@
  */
 /**
  * This critter flips a coin to determine if it wants to walk or run during each time step. It keeps track of the total
- * times it has walked and ran and the number of fights it has been in.
+ * times it has walked and ran and the number of fights it has been in. This critter does not fight it’s own species.
  */
 package assignment4;
 
